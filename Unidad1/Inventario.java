@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+
+
 class Producto {
     private String nombre;
     private int cantidad;
@@ -28,107 +31,60 @@ class Producto {
 }
 
 
-class Nodo {
-    Producto producto;
-    Nodo siguiente;
-
-    public Nodo(Producto producto) {
-        this.producto = producto;
-        this.siguiente = null;
-    }
-}
+public class Inventario {
+    public static void main(String[] args) {
+        
+        ArrayList<Producto> inventario = new ArrayList<>();
 
 
-class ListaEnlazada {
-    private Nodo cabeza;
-
-    public ListaEnlazada() {
-        this.cabeza = null;
-    }
-
-  
-    public void agregarProducto(Producto producto) {
-        Nodo nuevoNodo = new Nodo(producto);
-        if (cabeza == null) {
-            cabeza = nuevoNodo;
-        } else {
-            Nodo actual = cabeza;
-            while (actual.siguiente != null) {
-                actual = actual.siguiente;
-            }
-            actual.siguiente = nuevoNodo;
-        }
-    }
+        inventario.add(new Producto("Nuevo producto 1", 5));
+        inventario.add(new Producto("Nuevo producto 2", 0));  
+        inventario.add(new Producto("Nuevo producto 3", 3));
 
  
-    public void eliminarProducto(String nombreProducto) {
-        if (cabeza == null) {
-            System.out.println("Lista vacía, no se puede eliminar.");
-            return;
-        }
+        System.out.println("Inventario actual:");
+        mostrarInventario(inventario);
 
-        if (cabeza.producto.getNombre().equals(nombreProducto)) {
-            cabeza = cabeza.siguiente;  // Se elimina el primer nodo
-            System.out.println("Producto eliminado: " + nombreProducto);
-            return;
-        }
 
-        Nodo actual = cabeza;
-        while (actual.siguiente != null && !actual.siguiente.producto.getNombre().equals(nombreProducto)) {
-            actual = actual.siguiente;
-        }
+        eliminarProducto(inventario, "Nuevo producto 2"); 
+        eliminarProducto(inventario, "Nuevo producto 1"); 
 
-        if (actual.siguiente != null) {
-            actual.siguiente = actual.siguiente.siguiente;
-            System.out.println("Producto eliminado: " + nombreProducto);
-        } else {
-            System.out.println("Producto no encontrado: " + nombreProducto);
-        }
+
+        System.out.println("\nInventario después de eliminar productos:");
+        mostrarInventario(inventario);
+
+
+        inventario.add(new Producto("Nuevo producto 4", 2));
+
+        System.out.println("\nInventario final:");
+        mostrarInventario(inventario);
     }
 
 
-    public void mostrarInventario() {
-        if (cabeza == null) {
+    public static void mostrarInventario(ArrayList<Producto> inventario) {
+        if (inventario.isEmpty()) {
             System.out.println("El inventario está vacío.");
             return;
         }
 
-        Nodo actual = cabeza;
-        while (actual != null) {
-            System.out.println(actual.producto);
-            actual = actual.siguiente;
+        for (Producto producto : inventario) {
+            System.out.println(producto);
         }
     }
-}
 
 
-public class Inventario {
-    public static void main(String[] args) {
-    
-        ListaEnlazada inventario = new ListaEnlazada();
-
-
-        inventario.agregarProducto(new Producto("Nuevo producto 1", 5));
-        inventario.agregarProducto(new Producto("Nuevo producto 2", 0));  // Producto con cantidad 0
-        inventario.agregarProducto(new Producto("Nuevo producto 3", 3));
-
-
-        System.out.println("Inventario actual:");
-        inventario.mostrarInventario();
-
-
-        inventario.eliminarProducto("Nuevo producto 2"); // Producto con cantidad 0
-        inventario.eliminarProducto("Nuevo producto 1"); // Producto con cantidad mayor
-
-
-        System.out.println("\nInventario después de eliminar productos:");
-        inventario.mostrarInventario();
-
-
-        inventario.agregarProducto(new Producto("Nuevo producto 4", 2));
-
-
-        System.out.println("\nInventario final:");
-        inventario.mostrarInventario();
+    public static void eliminarProducto(ArrayList<Producto> inventario, String nombreProducto) {
+        boolean encontrado = false;
+        for (int i = 0; i < inventario.size(); i++) {
+            if (inventario.get(i).getNombre().equals(nombreProducto)) {
+                inventario.remove(i); 
+                System.out.println("Producto eliminado: " + nombreProducto);
+                encontrado = true;
+                break;
+            }
+        }
+        if (!encontrado) {
+            System.out.println("Producto no encontrado: " + nombreProducto);
+        }
     }
 }
