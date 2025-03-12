@@ -46,7 +46,7 @@ class ListaEnlazada {
         this.cabeza = null;
     }
 
-
+  
     public void agregarProducto(Producto producto) {
         Nodo nuevoNodo = new Nodo(producto);
         if (cabeza == null) {
@@ -68,7 +68,7 @@ class ListaEnlazada {
         }
 
         if (cabeza.producto.getNombre().equals(nombreProducto)) {
-            cabeza = cabeza.siguiente;  
+            cabeza = cabeza.siguiente;  // Se elimina el primer nodo
             System.out.println("Producto eliminado: " + nombreProducto);
             return;
         }
@@ -86,7 +86,7 @@ class ListaEnlazada {
         }
     }
 
- 
+
     public void mostrarInventario() {
         if (cabeza == null) {
             System.out.println("El inventario está vacío.");
@@ -104,27 +104,29 @@ class ListaEnlazada {
 
 public class Inventario {
     public static void main(String[] args) {
-
+    
         ListaEnlazada inventario = new ListaEnlazada();
 
 
         inventario.agregarProducto(new Producto("Nuevo producto 1", 5));
-        inventario.agregarProducto(new Producto("Nuevo producto 2", 0));
+        inventario.agregarProducto(new Producto("Nuevo producto 2", 0));  // Producto con cantidad 0
         inventario.agregarProducto(new Producto("Nuevo producto 3", 3));
 
- 
+
         System.out.println("Inventario actual:");
         inventario.mostrarInventario();
 
 
-        inventario.eliminarProducto("Nuevo producto 2"); 
-        inventario.eliminarProducto("Nuevo producto 1"); 
+        inventario.eliminarProducto("Nuevo producto 2"); // Producto con cantidad 0
+        inventario.eliminarProducto("Nuevo producto 1"); // Producto con cantidad mayor
 
- 
+
         System.out.println("\nInventario después de eliminar productos:");
         inventario.mostrarInventario();
 
+
         inventario.agregarProducto(new Producto("Nuevo producto 4", 2));
+
 
         System.out.println("\nInventario final:");
         inventario.mostrarInventario();
