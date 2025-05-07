@@ -1,5 +1,6 @@
 import java.util.*;
 
+
 public class GrafoTransporte {
     static final int N = 5; // A, B, C, D, E
     static String[] estaciones = {"A", "B", "C", "D", "E"};
@@ -12,9 +13,9 @@ public class GrafoTransporte {
         agregarConexion("C", "D");
         agregarConexion("D", "E");
 
-        System.out.println(sonVecinos("A", "B")); // true
-        System.out.println(sonVecinos("A", "E")); // false
-        System.out.println(hayCamino("A", "E"));  // true
+        sonVecinos("A", "B"); // vecinos
+        sonVecinos("A", "E"); // no vecinos
+        System.out.println("¿Hay camino entre A y E?: " + hayCamino("A", "E"));  // true
     }
 
     static void agregarConexion(String a, String b) {
@@ -24,8 +25,17 @@ public class GrafoTransporte {
         adyacencia[j][i] = true; // grafo no dirigido
     }
 
+    // Método modificado para indicar si son vecinos
     static boolean sonVecinos(String a, String b) {
-        return adyacencia[indice(a)][indice(b)];
+        int i = indice(a);
+        int j = indice(b);
+        boolean vecinos = adyacencia[i][j];
+        if (vecinos) {
+            System.out.println(a + " y " + b + " son vecinos.");
+        } else {
+            System.out.println(a + " y " + b + " no son vecinos.");
+        }
+        return vecinos;
     }
 
     static boolean hayCamino(String origen, String destino) {
